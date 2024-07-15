@@ -612,9 +612,15 @@ impl Server {
                             }
                             continue;
                         }
-                        if !base_name.to_lowercase().contains(&search) {
+                        // if !base_name.to_lowercase().contains(&search) {
+                        //     continue;
+                        // }
+                        use rust_fuzzy_search::fuzzy_compare;
+                        let fres = fuzzy_compare(&search, &base_name.to_lowercase());
+                        if fres < 0.5 {
                             continue;
                         }
+
                         paths.push(entry_path.to_path_buf());
                     }
                 }
